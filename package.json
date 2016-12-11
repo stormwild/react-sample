@@ -1,0 +1,25 @@
+{
+  "name": "react-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "babel-core": "^6.20.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stormwild/react-sample.git"
+  },
+  "author": "Alexander R. Torrijos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stormwild/react-sample/issues"
+  },
+  "homepage": "https://github.com/stormwild/react-sample#readme"
+}
