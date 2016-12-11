@@ -1,7 +1,6 @@
-var App = React.createClass({
-    render: function() {
-        
-        var data = [{ 
+var title = 'Recent Changes',
+    headings = ["Last change at", "By Author", "Summary"],
+    data = [{ 
             "when": "2 minutes ago", 
             "who": "Jill Dupre", 
             "description": "Created new account"
@@ -16,19 +15,26 @@ var App = React.createClass({
             "who": "Jordan Whash",
             "description": "Created new account"
         }];
-
-        var rows = data.map(function(row) {
+        
+var App = React.createClass({
+    render: function() {
+        var headings = this.props.headings.map(function(heading) {
+            return <th>{heading}</th>
+        });
+        
+        var rows = this.props.data.map(function(row) {
             return <tr><td>{ row.when }</td><td>{ row.who }</td><td>{ row.description }</td></tr>
         });
         
         return <div>
-            <h1>Recent Changes</h1>
+            <h1>{ this.props.title }</h1>
             <table>
-                <thead><tr><th>When</th><th>Who</th><th>Description</th></tr></thead>
+                <thead><tr>{ headings }</tr></thead>
                 <tbody>{ rows }</tbody>
             </table>
         </div>;
     }
 });
 
-ReactDOM.render(React.createElement(App), document.getElementById('app'));
+
+ReactDOM.render(<App title={ title } headings={ headings } data={ data } />, document.getElementById('app'));
