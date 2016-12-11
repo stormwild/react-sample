@@ -1,6 +1,6 @@
 var App = React.createClass({
     render: function(){
-        return(React.createElement("div", null, "Welcome to React!"));
+        return <p>Welcome to React!</p>;
     }
 });
 
