@@ -64,3 +64,5 @@ var App = React.createClass({
 
 
 ReactDOM.render(<App title={ title } headings={ headings } changeSets={ data } />, document.getElementById('app'));
+
+// @TODO Namespace components in a top level namespace
