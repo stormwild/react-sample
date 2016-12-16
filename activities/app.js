@@ -16,34 +16,42 @@ var title = 'Recent Changes',
             "description": "Created new account"
         }];
 
-var Heading = React.createClass({
+var RecentChangesTable = React.createClass({
+    render: function() {
+        return <table className="table table-bordered">
+            { this.props.children }
+        </table>;
+    }
+});
+
+RecentChangesTable.Heading = React.createClass({
     render: function() {
         var heading = this.props.heading;
         return <th>{ heading }</th>;
     }
 });
 
-var Headings = React.createClass({
+RecentChangesTable.Headings = React.createClass({
     render: function() {
         var headings = this.props.headings.map(function(heading) {
-            return <Heading heading={ heading } />
+            return <RecentChangesTable.Heading heading={ heading } />
         });
         
         return <thead><tr>{ headings }</tr></thead>;
     }
 });
 
-var Row = React.createClass({
+RecentChangesTable.Row = React.createClass({
     render: function() {
         var row = this.props.changeSet;
         return <tr><td>{ row.when }</td><td>{ row.who }</td><td>{ row.description }</td></tr>;
     }
 });
 
-var Rows = React.createClass({
+RecentChangesTable.Rows = React.createClass({
     render: function() {
         var rows = this.props.changeSets.map(function(row) {
-            return <Row changeSet={ row } />
+            return <RecentChangesTable.Row changeSet={ row } />
         });
         
         return <tbody>{ rows }</tbody>;
@@ -54,15 +62,14 @@ var App = React.createClass({
     render: function () {
         return <div>
             <h1>{ this.props.title }</h1>
-            <table className="table table-bordered">
-                <Headings headings={ this.props.headings } />
-                <Rows changeSets={ this.props.changeSets } />
-            </table>
+            <RecentChangesTable className="table table-bordered">
+                <RecentChangesTable.Headings headings={ this.props.headings } />
+                <RecentChangesTable.Rows changeSets={ this.props.changeSets } />
+            </RecentChangesTable>
         </div>;
     }
 });
 
+var props = { title: title, headings: headings, changeSets: data };
+ReactDOM.render(<App { ...props } />, document.getElementById('app'));
 
-ReactDOM.render(<App title={ title } headings={ headings } changeSets={ data } />, document.getElementById('app'));
-
-// @TODO Namespace components in a top level namespace
