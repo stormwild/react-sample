@@ -18,7 +18,7 @@ var title = 'Recent Changes',
 
 var RecentChangesTable = React.createClass({
     render: function() {
-        return <table className="table table-bordered">
+        return <table className="recent-changes-table table table-bordered">
             { this.props.children }
         </table>;
     }
@@ -62,7 +62,7 @@ var App = React.createClass({
     render: function () {
         return <div>
             <h1>{ this.props.title }</h1>
-            <RecentChangesTable className="table table-bordered">
+            <RecentChangesTable>
                 <RecentChangesTable.Headings headings={ this.props.headings } />
                 <RecentChangesTable.Rows changeSets={ this.props.changeSets } />
             </RecentChangesTable>

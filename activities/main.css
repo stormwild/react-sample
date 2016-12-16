@@ -1,0 +1,9 @@
+.recent-changes-table tr {
+    background-color: AliceBlue;
+}
+
+.recent-changes-table th {
+    background-color: FloralWhite;
+    font-size: 24px;
+}
+
