@@ -59,6 +59,18 @@ RecentChangesTable.Rows = React.createClass({
 });
 
 var App = React.createClass({
+    propTypes: {
+        headings: React.PropTypes.array,
+        changeSets: React.PropTypes.array,
+        title: React.PropTypes.string.isRequired
+    },
+    
+    getDefaultProps: function() {
+        return {
+            headings: ['When', 'Who', 'What Changed']
+        };
+    },
+    
     render: function () {
         return <div>
             <h1>{ this.props.title }</h1>
@@ -70,6 +82,6 @@ var App = React.createClass({
     }
 });
 
-var props = { title: title, headings: headings, changeSets: data };
+var props = { title: title, changeSets: data };
 ReactDOM.render(<App { ...props } />, document.getElementById('app'));
 
