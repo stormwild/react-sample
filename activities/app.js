@@ -1,5 +1,5 @@
 var title = 'Recent Changes',
-    headings = ["Last change at", "By Author", "Summary"],
+    headings = ["Updated", "Author", "Change"],
     data = [{ 
             "when": "2 minutes ago", 
             "who": "Jill Dupre", 
