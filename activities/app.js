@@ -71,7 +71,19 @@ var App = React.createClass({
         };
     },
     
+    getInitialState: function() {
+        return {
+            changeSets: []
+        };
+    },
+    
+    handleEvent: function(data) {
+        this.setState({ changeSets: data });
+    },
+    
     render: function () {
+        this.handleEvent(data);
+        console.log(this.state.changeSets);
         return <div>
             <h1>{ this.props.title }</h1>
             <RecentChangesTable>
