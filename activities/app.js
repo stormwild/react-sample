@@ -33,8 +33,8 @@ RecentChangesTable.Heading = React.createClass({
 
 RecentChangesTable.Headings = React.createClass({
     render: function() {
-        var headings = this.props.headings.map(function(heading) {
-            return <RecentChangesTable.Heading heading={ heading } />
+        var headings = this.props.headings.map(function(heading, index) {
+            return <RecentChangesTable.Heading key={ index } heading={ heading } />
         });
         
         return <thead><tr>{ headings }</tr></thead>;
@@ -50,8 +50,8 @@ RecentChangesTable.Row = React.createClass({
 
 RecentChangesTable.Rows = React.createClass({
     render: function() {
-        var rows = this.props.changeSets.map(function(row) {
-            return <RecentChangesTable.Row changeSet={ row } />
+        var rows = this.props.changeSets.map(function(row, index) {
+            return <RecentChangesTable.Row key={ index } changeSet={ row } />
         });
         
         return <tbody>{ rows }</tbody>;
@@ -65,12 +65,20 @@ var App = React.createClass({
         title: React.PropTypes.string.isRequired
     },
     
+    componentWillMount: function() {
+        console.log('componentWillMount');
+    },
+    
+    componentDidMount: function() {
+        console.log('componentDidMount');
+    },
+    
     getDefaultProps: function() {
         return {
             headings: ['When', 'Who', 'What Changed']
         };
     },
-    
+
     getInitialState: function() {
         return {
             changeSets: []
@@ -81,9 +89,20 @@ var App = React.createClass({
         this.setState({ changeSets: data });
     },
     
+    componentWillReceiveProps: function(nextProps) {
+        console.log('componentWillReceiveProps', nextProps);
+    },
+    
+    shouldComponentUpdate: function(nextProps, nextState) {
+        console.log('shouldComponentUpdate');
+        return true;
+    },
+    
+    componentWillUpdate: function() {
+        console.log('componentWillUpdate');
+    },
+    
     render: function () {
-        this.handleEvent(data);
-        console.log(this.state.changeSets);
         return <div>
             <h1>{ this.props.title }</h1>
             <RecentChangesTable>
@@ -91,6 +110,14 @@ var App = React.createClass({
                 <RecentChangesTable.Rows changeSets={ this.props.changeSets } />
             </RecentChangesTable>
         </div>;
+    },
+    
+    componentWillUnmount: function() {
+        console.log('componentWillUnmount');
+    },
+    
+    toggleState: function() {
+        this.setState({ status: !this.state.status });
     }
 });
 
