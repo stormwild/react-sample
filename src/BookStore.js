@@ -2,11 +2,15 @@ import React from 'react';
 
 var BookList = React.createClass({
     getInitialState() {
-        return ({ books: [
-            { id: 1, name: 'Zero to One', author: 'Peter Thiel' },
-            { id: 2, name: 'Monk who sold his Ferrari', author: 'Robin Sharma' },
-            { id: 3, name: 'Wings of Fire', author: 'A.P.J. Abdul Kalam' }
-            ] });
+        return ({ 
+            books: [
+                { id: 1, name: 'Zero to One', author: 'Peter Thiel' },
+                { id: 2, name: 'Monk who sold his Ferrari', author: 'Robin Sharma' },
+                { id: 3, name: 'Wings of Fire', author: 'A.P.J. Abdul Kalam' }
+            ],
+            
+            selectedBooks: []
+        });
     },
     
     _renderBook(book) {
