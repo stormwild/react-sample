@@ -32,9 +32,9 @@ var BookList = React.createClass({
         if(event.target.checked) {
             if(index === -1) {
                 selectedBooks.push(event.target.value);
-            } else {
-                selectedBooks.splice(index, 1);
-            }
+            } 
+        } else {
+            selectedBooks.splice(index, 1);
         }
         
         this.setState({ selectedBooks: selectedBooks });
