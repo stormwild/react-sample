@@ -9,7 +9,9 @@ var BookList = React.createClass({
                 { id: 3, name: 'Wings of Fire', author: 'A.P.J. Abdul Kalam' }
             ],
             
-            selectedBooks: []
+            selectedBooks: [],
+            
+            error: false
         });
     },
     
@@ -23,6 +25,16 @@ var BookList = React.createClass({
                 </label>
             </div>
             );
+    },
+    
+    _renderError() {
+        if(this.state.error) {
+            return (
+                <div className="alert alert-danger">
+                    { this.state.error }
+                </div>
+                );
+        }
     },
     
     handleSelectedBooks(event) {
@@ -41,9 +53,12 @@ var BookList = React.createClass({
     },
     
     render() {
+        var errorMsg = this._renderError();
+        
         return (
             <div>
                 <h1>Choose from a wide variety of books available in our store.</h1>
+                { errorMsg }
                 <form onSubmit={ this.handleSubmit }>
                     { this.state.books.map((book) => { return this._renderBook(book); }) }
                     <input type="submit" className="btn btn-success" />
@@ -54,7 +69,13 @@ var BookList = React.createClass({
     
     handleSubmit(event) {
         event.preventDefault();
-        this.props.updateFormData({ selectedBooks: this.state.selectedBooks });
+        
+        if(this.state.selectedBooks.length === 0) {
+            this.setState({ error: 'Please choose at least one book to continue' });
+        } else {
+            this.setState({ error: false });
+            this.props.updateFormData({ selectedBooks: this.state.selectedBooks });
+        }
     }
 });
 
@@ -72,16 +93,18 @@ var DeliveryDetails = React.createClass({
 
 var BookStore = React.createClass({
     getInitialState() {
-        return ({ currentStep: 1 });
+        return ({ currentStep: 1, formValues: {} });
     },
     
     updateFormData(formData) {
+        var formValues = Object.assign({}, this.state.formValues, formData), 
+            nextStep = this.state.currentStep + 1;
+        this.setState({ currentStep: nextStep, formValues: formValues });
         console.log(formData);
     },
     
     render() {
-        var step = this.state.currentStep;
-        switch(step) {
+        switch(this.state.currentStep) {
             case 1:
                 return <BookList updateFormData={ this.updateFormData } />;
             case 2:
