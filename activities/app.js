@@ -14,6 +14,8 @@
             "description": "Created new account"
         }]*/
         
+/* Don't mind the IDE errors when opening this file */
+        
 var title = 'Recent Changes',
     headings = ["Updated", "Author", "Change"];
 
