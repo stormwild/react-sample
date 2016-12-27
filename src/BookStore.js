@@ -80,6 +80,35 @@ var BookList = React.createClass({
 });
 
 var ShippingDetails = React.createClass({
+    getInitialState() {
+        return ({ fullName: '', contactNumber: '', shippingAddress: '', error: false });    
+    },
+    
+    _renderError() {
+        if(this.state.error) {
+            return (<div className="alert alert-dange">{ this.state.error }</div>);
+        }
+    },
+    
+    _validateInput() {
+        if(this.state.fullName === '') {
+            this.setState({ error: 'Please enter full name' });
+        } else if(this.state.contactNumber === '') {
+            this.setState({ error: 'Please enter contact number' });
+        } else if(this.state.shippingAddress === '') {
+            this.setState({ error: 'Please enter shipping address' });
+        } else {
+            this.setState({ error: false });
+            return true;
+        }
+    },
+    
+    handleSubmit(event) {
+        event.preventDefault();
+        
+        var formData = {};
+    },
+    
     render() {
         return (<h1>Enter your shipping information.</h1>);
     }
