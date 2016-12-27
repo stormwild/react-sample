@@ -1,6 +1,4 @@
-var title = 'Recent Changes',
-    headings = ["Updated", "Author", "Change"],
-    data = [{ 
+  /*data = [{ 
             "when": "2 minutes ago", 
             "who": "Jill Dupre", 
             "description": "Created new account"
@@ -14,7 +12,10 @@ var title = 'Recent Changes',
             "when": "2 hours ago",
             "who": "Jordan Whash",
             "description": "Created new account"
-        }];
+        }]*/
+        
+var title = 'Recent Changes',
+    headings = ["Updated", "Author", "Change"];
 
 var RecentChangesTable = React.createClass({
     render: function() {
@@ -50,6 +51,7 @@ RecentChangesTable.Row = React.createClass({
 
 RecentChangesTable.Rows = React.createClass({
     render: function() {
+        console.log(this.props.changeSets);
         var rows = this.props.changeSets.map(function(row, index) {
             return <RecentChangesTable.Row key={ index } changeSet={ row } />
         });
@@ -61,7 +63,6 @@ RecentChangesTable.Rows = React.createClass({
 var App = React.createClass({
     propTypes: {
         headings: React.PropTypes.array,
-        changeSets: React.PropTypes.array,
         title: React.PropTypes.string.isRequired
     },
     
@@ -71,6 +72,25 @@ var App = React.createClass({
     
     componentDidMount: function() {
         console.log('componentDidMount');
+        $.ajax({
+            url: 'https://openlibrary.org/recentchanges.json?limit=10',
+            context: this,
+            dataType: 'json',
+            type: 'GET'
+        }).done(function(data) {
+            var changeSets = this.mapOpenLibraryDataToChangeSet(data);
+            this.setState({ changeSets: changeSets });
+        });
+    },
+    
+    mapOpenLibraryDataToChangeSet: function(data) {
+        return data.map(function(change, index) {
+            return {
+                'when': jQuery.timeago(change.timestamp),
+                'who': change.author.key,
+                'description': change.comment
+            };
+        });
     },
     
     getDefaultProps: function() {
@@ -85,9 +105,9 @@ var App = React.createClass({
         };
     },
     
-    handleEvent: function(data) {
+    /*handleEvent: function(data) {
         this.setState({ changeSets: data });
-    },
+    },*/
     
     componentWillReceiveProps: function(nextProps) {
         console.log('componentWillReceiveProps', nextProps);
@@ -107,7 +127,7 @@ var App = React.createClass({
             <h1>{ this.props.title }</h1>
             <RecentChangesTable>
                 <RecentChangesTable.Headings headings={ this.props.headings } />
-                <RecentChangesTable.Rows changeSets={ this.props.changeSets } />
+                <RecentChangesTable.Rows changeSets={ this.state.changeSets } />
             </RecentChangesTable>
         </div>;
     },
@@ -121,6 +141,6 @@ var App = React.createClass({
     }
 });
 
-var props = { title: title, changeSets: data };
+var props = { title: title };
 ReactDOM.render(<App { ...props } />, document.getElementById('app'));
 

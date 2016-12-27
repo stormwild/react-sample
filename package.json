@@ -4,7 +4,8 @@
   "description": "Sample application based on the book ReactJs By Example",
   "main": "index.js",
   "dependencies": {
-    "react": "^15.4.1"
+    "react": "^15.4.1",
+    "timeago": "^1.5.3"
   },
   "devDependencies": {
     "babel-core": "^5.4.7",
