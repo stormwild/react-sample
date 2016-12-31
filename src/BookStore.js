@@ -121,7 +121,6 @@ var ShippingDetails = React.createClass({
         var newState = this.state;
         newState[attribute] = event.target.value;
         this.setState(newState);
-        console.log(this.state);
     },
     
     render() {
@@ -163,8 +162,76 @@ var ShippingDetails = React.createClass({
 });
 
 var DeliveryDetails = React.createClass({
+    getInitialState() {
+        return ({
+            deliveryOption: 'Primary'
+        });
+    },
+    
+    handleChange(event) {
+        this.setState({ deliveryOption: event.target.value })
+    },
+    
+    handleSubmit(event) {
+        event.preventDefault();
+        this.props.updateFormData(this.state);
+    },
+    
     render() {
-        return (<h1>Choose delivery options here.</h1>);
+        return (
+            <div>
+                <h1>Choose delivery options here.</h1>
+                <form onSubmit={ this.handleSubmit }>
+                    <div className="radio">
+                        <label>
+                            <input type="radio" 
+                            checked={ this.state.deliveryOption === 'Primary' } 
+                            value="Primary" onChange={ this.handleChange } /> 
+                            Primary -- Next day delivery
+                        </label>
+                    </div>
+                    <div className="radio">
+                        <label>
+                            <input type="radio" 
+                            checked={ this.state.deliveryOption === 'Normal' } 
+                            value="Normal" onChange={ this.handleChange } /> 
+                            Normal -- 3-4 days
+                        </label>
+                    </div>
+                    <button className="btn btn-success">Place order</button>
+                </form>
+            </div>
+            );
+    }
+});
+
+var Confirmation = React.createClass({
+    handleSubmit(event) {
+        event.preventDefault();
+        this.props.updateFormData(this.props.data);
+    },
+    
+    render() {
+        return (
+            <div>
+                <h1>Are you sure you want to submit the data?</h1>
+                <form onSubmit={ this.handleSubmit }>
+                    <div>
+                        <strong>Full Name</strong> : { this.props.data.fullName }
+                    </div><br/>
+                    <div>
+                        <strong>Contact Number</strong> : { this.props.data.contactNumber }
+                    </div><br/>
+                    <div>
+                        <strong>Shipping Address</strong> : { this.props.data.shippingAddress }
+                    </div><br/>                    
+                    <div>
+                        <strong>Selected books</strong> : { this.props.data.selectedBooks.join(', ') }
+                    </div><br/>                    
+                    <button className="btn btn-success">Place order</button>
+                </form>
+            </div>
+            );
     }
 });
 
@@ -177,7 +244,7 @@ var BookStore = React.createClass({
         var formValues = Object.assign({}, this.state.formValues, formData), 
             nextStep = this.state.currentStep + 1;
         this.setState({ currentStep: nextStep, formValues: formValues });
-        console.log(formData);
+        console.log(nextStep, formData);
     },
     
     render() {
@@ -188,8 +255,12 @@ var BookStore = React.createClass({
                 return <ShippingDetails updateFormData={ this.updateFormData } />;
             case 3:
                 return <DeliveryDetails updateFormData={ this.updateFormData } />;
+            case 4:
+                return <Confirmation data={ this.state.formValues } updateFormData={ this.updateFormData } />;
+            default:
+                return <BookList updateFormData={ this.updateFormData } />;
         }
     }
 });
 
-export { BookStore, BookList, ShippingDetails, DeliveryDetails };
+export { BookStore, BookList, ShippingDetails, DeliveryDetails, Confirmation };
