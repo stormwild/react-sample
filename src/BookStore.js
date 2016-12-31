@@ -235,6 +235,23 @@ var Confirmation = React.createClass({
     }
 });
 
+var Success = React.createClass({
+    render() {
+        var numberOfDays = '1 to 2 ';
+        
+        if (this.props.data.deliveryOption === 'Normal') {
+            numberOfDays = '3 to 4 ';
+        }
+        
+        return (
+            <div>
+                <h2>Thank you for shopping with us {this.props.data.fullName}.</h2>
+                <h4>You will soon get {this.props.data.selectedBooks.join(', ')} at {this.props.data.shippingAddress} in approrximately {numberOfDays} days.</h4>
+            </div>
+            );
+    }
+});
+
 var BookStore = React.createClass({
     getInitialState() {
         return ({ currentStep: 1, formValues: {} });
@@ -257,10 +274,12 @@ var BookStore = React.createClass({
                 return <DeliveryDetails updateFormData={ this.updateFormData } />;
             case 4:
                 return <Confirmation data={ this.state.formValues } updateFormData={ this.updateFormData } />;
+            case 5:
+                return <Success data={ this.state.formValues } />
             default:
                 return <BookList updateFormData={ this.updateFormData } />;
         }
     }
 });
 
-export { BookStore, BookList, ShippingDetails, DeliveryDetails, Confirmation };
+export { BookStore, BookList, ShippingDetails, DeliveryDetails, Confirmation, Success };
