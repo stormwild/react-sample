@@ -1,3 +1,4 @@
+//import React from 'react';
   /*data = [{ 
             "when": "2 minutes ago", 
             "who": "Jill Dupre", 
@@ -17,7 +18,7 @@
 /* Don't mind the IDE errors when opening this file */
         
 var title = 'Recent Changes',
-    headings = ["Updated", "Author", "Change"];
+    headings = ['Updated', 'Author', 'Change'];
 
 var RecentChangesTable = React.createClass({
     render: function() {
